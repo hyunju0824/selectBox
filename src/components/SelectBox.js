@@ -1,5 +1,8 @@
+import { selectList } from "../recoil/selectors/selector"
+import { useRecoilValue } from "recoil"
 
-export default function Example() {
+export default function SelectBox() {
+    const selectData = useRecoilValue(selectList)
     return (
         <div className="w-96 h-96 m-auto mt-32 flex flex-col rounded-lg items-center bg-cyan-50">
             <div className="w-52 m-auto">
