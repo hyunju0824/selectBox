@@ -1,8 +1,15 @@
+import { useState } from "react";
 import { selectList } from "../recoil/selectors/selector"
 import { useRecoilValue } from "recoil"
 
 export default function SelectBox() {
+
+    // 첫번째 select box
     const selectData = useRecoilValue(selectList);
+
+    // 두번째 select box
+    const [selectedType, setSelectedType] = useState(selectData.type.default);
+
     console.log(selectData.type);
     console.log(selectData.type.default);
 
@@ -18,6 +25,7 @@ export default function SelectBox() {
                     name="type"
                     className="mt-5 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     defaultValue= {selectData.type.default}
+                    onChange={e => setSelectedType(e.target.value)}
                 >
                     {
                         Object.keys(selectData.type.options).map((typeName) => (
@@ -31,11 +39,15 @@ export default function SelectBox() {
                     id="type"
                     name="type"
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue="Canada"
+                    defaultValue={selectData.type.options[selectedType].default}
                 >
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>Mexico</option>
+                    {
+                        selectData.type.options[selectedType].options.map((optionName) => (
+                            <option value={optionName} key={optionName}>
+                                {optionName}
+                            </option>
+                        ))
+                    }
                 </select>
                 <select
                     id="location"
